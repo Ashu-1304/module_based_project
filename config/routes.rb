@@ -7,4 +7,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :bx_block_account_block do
+    resources :accounts do
+      post "/verify_email_otp", to: "accounts#verify_email_otp", on: :collection  
+      post "/resend_email_otp", to: "accounts#resend_email_otp", on: :collection
+    end
+  end
 end
