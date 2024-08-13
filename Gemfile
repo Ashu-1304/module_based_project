@@ -60,6 +60,7 @@ gem 'rspec-sonarqube-formatter'
 
 gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
 gem 'jsonapi-rails'
+
 gem 'jwt'
 
 
