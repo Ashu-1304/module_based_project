@@ -38,12 +38,25 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'simplecov'
+  # Easy installation and use of web drivers to run system tests with browsers
+  gem 'webdrivers'
+  gem 'webmock'
 end
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+gem 'active_model_serializers'
+gem 'fast_jsonapi'
+gem 'factory_bot'
+gem 'faker'
+gem 'rspec-sonarqube-formatter'
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
 gem 'jsonapi-rails'
