@@ -9,4 +9,7 @@ Rails.application.routes.draw do
     get 'fetch_location',to: "addresses#fetch_location"
     get 'all_record',to: "addresses#all_record"
   end
+  namespace :bx_block_login do
+    resources :login
+  end
 end
