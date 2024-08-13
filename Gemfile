@@ -62,5 +62,10 @@ gem 'jsonapi-rails'
 
 gem 'jwt'
 
+gem 'activeadmin'
+gem 'devise'
+gem 'sassc'
+gem 'sprockets-rails'
+
 
 
