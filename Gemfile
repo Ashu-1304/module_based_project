@@ -58,7 +58,6 @@ gem 'faker'
 gem 'rspec-sonarqube-formatter'
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
 gem 'jsonapi-rails'
 
 gem 'jwt'
