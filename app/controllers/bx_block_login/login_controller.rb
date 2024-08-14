@@ -1,8 +1,9 @@
 class BxBlockLogin::LoginController < ApplicationController
+  skip_before_action :authenticate_request
+  skip_before_action :verify_authenticity_token
 
   def create
     @account = BxBlockAccountBlock::Account.find_by(email: login_params[:email])
-
     if @account.present?
       if @account.activated && @account.authenticate(login_params[:password])
         token = BuilderJsonWebToken::JsonWebToken.encode(user_id: @account.id)
