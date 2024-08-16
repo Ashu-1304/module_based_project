@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "up" => "rails/health#show", as: :rails_health_check
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   namespace :bx_block_account_block do
@@ -16,5 +17,15 @@ Rails.application.routes.draw do
   namespace :bx_block_login do
     resources :login
   end
-  
+
+  namespace :bx_block_notifications do
+    resources :notifications do
+      member do
+        post :read_notification
+      end
+      collection do
+        delete :destroy_all
+      end
+    end
+  end
 end
