@@ -8,7 +8,7 @@ module BxBlockNotifications
       if @notifications
         render json: @notifications, status: :ok
       else
-        render json: { message: "Notification not found"}, status: :not_found
+        render json: { message: "Notification not found" }, status: :not_found
       end
     end
 
