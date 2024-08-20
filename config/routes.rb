@@ -28,4 +28,8 @@ Rails.application.routes.draw do
       end
     end
   end
+  namespace :bx_block_forgot_password do
+    resources :otps
+    resources :passwords
+  end 
 end

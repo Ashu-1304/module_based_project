@@ -1,4 +1,3 @@
-
 module BxBlockAccountBlock
 	class Account < ApplicationRecord
 		self.table_name = :accounts
@@ -32,4 +31,6 @@ module BxBlockAccountBlock
 		end 
 	end
 end
+
+
 
