@@ -1,0 +1,11 @@
+<h1>All Notifications</h1>
+
+<div id="notifications">
+  <% @notifications.each do |notification| %>
+    <div id="notification_<%= notification.id %>" class="notification">
+      <h4><%= notification.title %></h4>
+      <p><%= notification.message %></p>
+      <small><%= notification.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small>
+    </div>
+  <% end %>
+</div>

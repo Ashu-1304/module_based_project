@@ -37,7 +37,11 @@ module BxBlockAccountBlock
 					email_otp = EmailOtp.find_by(email: account.email)
 					if email_otp&.pin == params[:data][:attributes][:otp].to_i && email_otp.valid_until > Time.current
 						account.update(activated: true)
-						render json: { message: "OTP verified, account activated", user: account.as_json.merge(token: request.headers[:token]) }, status: :ok
+						notification = BxBlockNotifications::Notification.create(title: "Welcome Notification", message: "Welcome, #{account.first_name}! Your account has been successfully created.", account_id: account.id)
+						if notification.save
+							ActionCable.server.broadcast("notification_channel_#{account.id}", { notification: notification })
+						end
+						render json: { message: "OTP verified, account activated", user: account.as_json.merge(token: request.headers[:token]), notification:  notification }, status: :ok
 					else
 						render json: { message: "Invalid or expired OTP" }, status: :unprocessable_entity
 					end
@@ -78,5 +82,6 @@ module BxBlockAccountBlock
 		def send_otp_email(email, otp_token)
 			OtpMailer.with(email: email, otp: otp_token).send_otp_email.deliver_now
 		end
+
 	end
 end
