@@ -134,6 +134,7 @@ RSpec.describe BxBlockAddressBlock::AddressesController, type: :controller do
         expect(json_response['error']).to eq('No Address Found?')
       end
     end
+    
   end
 
 end
