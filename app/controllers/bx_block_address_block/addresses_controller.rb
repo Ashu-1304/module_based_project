@@ -2,15 +2,38 @@ require 'net/http'
 require 'json'
 
 class BxBlockAddressBlock::AddressesController < ApplicationController
+  skip_before_action :authenticate_request
 
-  def all_record
-    @records = BxBlockAddressBlock::Address.all
-    if @records.present?
-      render json:  BxBlockAddressBlock::AddressSerializer.new(@records).serialized_json,status: :ok
+  def location_pincode
+    unless params[:pincode].present?
+      render json: { error: "Please provide Pincode?" }, status: :unprocessable_entity
+      return
+    end
+    
+    begin
+      response = Geocoder.search(params[:pincode])
+    rescue JSON::ParserError => e
+      render json: { error: "Invalid response from Geocoding API: #{e.message}" }, status: :bad_gateway
+      return
+    rescue StandardError => e
+      render json: { error: "An error occurred: #{e.message}" }, status: :internal_server_error
+      return
+    end
+  
+    if response && response.first
+      location = response.first.data
+      render json: {
+      pincode: params[:pincode],
+      latitude: location['lat'],
+      longitude: location['lon'],
+      address: location['address']
+    }, status: :ok
     else
-      render json: {Error: "No Addresses Found?"},status: :not_found
+      render json: { error: "No Address Found?" }, status: :not_found
     end
   end
+  
+  
 
   def fetch_location
     unless params[:pincode].present? && params[:country].present?
@@ -27,7 +50,6 @@ class BxBlockAddressBlock::AddressesController < ApplicationController
       render json: { error: "Unsupported country" }, status: :unprocessable_entity
       return
     end
-    # debugger
     response = fetch_all_location(pincode, country_code)
   
     if response && response["places"]
