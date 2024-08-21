@@ -66,4 +66,5 @@ gem 'activeadmin'
 gem 'devise'
 gem 'sassc'
 gem 'sprockets-rails'
+gem 'geocoder'
 

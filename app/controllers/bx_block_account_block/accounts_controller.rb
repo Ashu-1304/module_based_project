@@ -1,6 +1,6 @@
 module BxBlockAccountBlock
 	class AccountsController < ApplicationController
-		skip_before_action :verify_authenticity_token
+		skip_before_action :authenticate_request
 		def create
       case params[:data][:type]
       when 'email_account'

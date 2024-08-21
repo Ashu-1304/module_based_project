@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   namespace "bx_block_address_block" do 
     get 'fetch_location',to: "addresses#fetch_location"
-    get 'all_record',to: "addresses#all_record"
+    get 'location_pincode',to: "addresses#location_pincode"
   end
 
   namespace :bx_block_login do
