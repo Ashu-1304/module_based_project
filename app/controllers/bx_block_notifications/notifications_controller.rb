@@ -37,7 +37,14 @@ module BxBlockNotifications
       if @notification.present?
         @notification.update(is_read: true)
         render json: { message: "Notification read successfully" }, status: :ok
-      elsif params[:read_all]
+      else
+        render json: { message: "No notification found" }, status: :not_found
+      end
+    end
+
+    def read_all_notification
+      if @current_user.notifications
+        params[:read_all]
         @current_user.notifications.update_all(is_read: true)
         render json: { message: "All notifications read successfully" }, status: :ok
       else

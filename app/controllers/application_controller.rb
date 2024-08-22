@@ -2,6 +2,12 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_request
   protect_from_forgery with: :null_session
 
+  include ActionView::Layouts
+  protect_from_forgery unless: -> { request.format.json? }
+
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   private
 
   def authenticate_request
@@ -20,5 +26,10 @@ class ApplicationController < ActionController::Base
     else
       render json: { errors: "Missing token" }, status: :unauthorized
     end
+  end
+
+  def user_not_authorized
+    flash[:alert] = 'You are not authorized to perform this action.'
+    redirect_to admin_dashboard_path
   end
 end

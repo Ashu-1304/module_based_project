@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       end
       collection do
         delete :destroy_all
+        post :read_all_notification
       end
     end
   end
