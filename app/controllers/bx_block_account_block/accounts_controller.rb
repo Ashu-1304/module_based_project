@@ -1,6 +1,6 @@
 module BxBlockAccountBlock
 	class AccountsController < ApplicationController
-		skip_before_action :authenticate_request
+		before_action :authenticate_request, only: [:index]
 		def create
       case params[:data][:type]
       when 'email_account'
@@ -70,8 +70,8 @@ module BxBlockAccountBlock
 	  end
 
 		def index
-			@account = BxBlockAccountBlock::Account.all 
-			render json: BxBlockAccountBlock::AccountSerializer.new(@account), status: :ok
+			@accounts = BxBlockAccountBlock::Account.all
+			render json: BxBlockAccountBlock::AccountSerializer.new(@accounts), status: :ok
 		end
 
 		private

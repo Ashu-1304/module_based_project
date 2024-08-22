@@ -68,3 +68,5 @@ gem 'sassc'
 gem 'sprockets-rails'
 gem 'geocoder'
 
+
+gem "pundit", "~> 2.3"
