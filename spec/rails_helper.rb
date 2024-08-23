@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'simplecov'
+# require 'simplecov-json'/
 SimpleCov.start do
  add_group "Models", "app/models"
  add_group "Controllers", "app/controllers/api/v1"
@@ -40,10 +41,22 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+SimpleCov.start('rails') do
+  add_group "Admins", "app/admin"
+  add_group "Models", "app/models"
+  add_group "Controllers", "app/controllers"
+  add_group "Multiple Files", ["app/models", "app/controllers"]
+  add_group "bx_blocks", %r{ bx_block.*}
+  add_filter %r{vendor/ruby/ruby/2.*}
+end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
+
+  config.include Warden::Test::Helpers
+
   # config.include Devise::Test::ControllerHelpers, type: :controller
   # config.include Warden::Test::Helpers
 

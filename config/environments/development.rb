@@ -71,14 +71,40 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :letter_opener
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                  587,
-    domain:               'gmail.com',
-    user_name:            'sp8316886@gmail.com',
-    password:             'xisr tvmf xeyz rswx',
-    authentication:       "plain",
-    enable_starttls_auto: true
-  }
+
+  Rails.application.config.after_initialize do
+    smtp_setting = BxBlockAccountBlock::SmtpSetting.last
+    if smtp_setting.enable_starttls_auto
+      config.action_mailer.smtp_settings = {
+        address:              'smtp.gmail.com',
+        port:                  587,
+        domain:               'gmail.com',
+        user_name:            smtp_setting&.username,
+        password:             smtp_setting&.smtp_password,
+        authentication:       "plain",
+        enable_starttls_auto: smtp_setting&.enable_starttls_auto.nil? ? true : smtp_setting.enable_starttls_auto
+      }
+    end
+  end
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  
+  
+  # Rails.application.config.after_initialize do
+  #   smtp_setting = SmtpSetting.last
+  #   if smtp_setting.enable_starttls_auto
+  #     config.action_mailer.smtp_settings = {
+  #       address:              'smtp.gmail.com',
+  #       port:                 587,
+  #       domain:               'localhost:3000',
+  #       user_name:            smtp_setting&.user_name || 'ashu.shukla@poolstack.in',
+  #       password:             smtp_setting&.smtp_password || 'mwqf pgjd xggf mebl',
+  #       authentication:       'plain',
+  #       enable_starttls_auto: smtp_setting&.enable_starttls_auto.nil? ? true : smtp_setting.enable_starttls_auto
+  #     }
+  #   else
+  #     Rails.logger.error "SMTP settings error: Start TLS must be enabled for sending emails."
+  #   end
+  # end
+
 end
