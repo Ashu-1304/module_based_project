@@ -5,10 +5,10 @@ module BxBlockNotifications
     before_action :load_notifications, only: [:index]
 
     def index
-      if @notifications
+      if @notifications.present?
         render json: @notifications, status: :ok
       else
-        render json: { message: "Notification not found" }, status: :not_found
+        render json: { error: "Notification not found" }, status: :not_found
       end
     end
 
@@ -20,16 +20,16 @@ module BxBlockNotifications
           message: "Notification has been deleted successfuly",
         }, status: :ok
       else
-        render json: { message: "Notification not found" }, status: :unprocessable_entity
+        render json: { error: "Notification not found" }, status: :not_found
       end
     end
 
     def destroy_all
-      if @current_user.notifications
+      if @current_user.notifications.exists?
         @current_user.notifications.destroy_all
         render json: { message: "All notifications are deleted" }, status: :ok
       else
-        render json: { message: "Couldn't delete, something went wrong" }, status: :unprocessable_entity
+        render json: { error: "Couldn't delete, something went wrong" }, status: :unprocessable_entity
       end
     end
 
@@ -38,17 +38,17 @@ module BxBlockNotifications
         @notification.update(is_read: true)
         render json: { message: "Notification read successfully" }, status: :ok
       else
-        render json: { message: "No notification found" }, status: :not_found
+        render json: { error: "No notification found" }, status: :not_found
       end
     end
 
     def read_all_notification
-      if @current_user.notifications
+      if @current_user.notifications.exists?
         params[:read_all]
         @current_user.notifications.update_all(is_read: true)
         render json: { message: "All notifications read successfully" }, status: :ok
       else
-        render json: { message: "No notification found" }, status: :not_found
+        render json: { error: "No notification found" }, status: :not_found
       end
     end
 

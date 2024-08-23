@@ -29,4 +29,12 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :admin do
+    resources :colleges do
+      collection do
+        get :departments
+      end
+    end
+  end
 end
