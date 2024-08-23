@@ -1,4 +1,8 @@
-
+require 'simplecov'
+SimpleCov.start('rails') do
+  add_group 'bx_blocks', %r{bx_block_*}
+  add_filter '/vendor/'
+end
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'rspec/rails'
