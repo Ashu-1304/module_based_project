@@ -4,7 +4,7 @@ module BxBlockAccountBlock
 		self.table_name = :accounts
         has_secure_password
 		has_many :notifications, class_name: "BxBlockNotifications::Notification", dependent: :destroy
-		validates :email,  presence: true
+		validates :email, :first_name, :last_name, presence: true
 		validates :last_name, length: { minimum: 2, maximum: 30 }, format: { with: /\A[a-zA-Z\s]+\z/, message:"Your name cannot include special characters or numbers"}
 		validates :first_name, length: { minimum: 2, maximum: 30 }, format: { with: /\A[a-zA-Z\s]+\z/, message:"Your name cannot include special characters or numbers"}
 		validates :email, uniqueness: { case_sensitive: false, message:"This email address is already in use by another account"} 
