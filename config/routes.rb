@@ -29,4 +29,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  namespace :bx_block_profile do
+    resources :profiles, only: [:show, :update,:create,:destroy]
+  end
 end
